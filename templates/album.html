@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Album Details</title>
+<style>
+    body {
+  background-color: #0F0F0F; /* Dark background */
+  color: #0F0; /* Bright green text */
+  font-family: 'Courier New', Courier, monospace; /* Gives a more 'terminal' feel */
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+th, td {
+  text-align: left;
+  padding: 8px;
+}
+
+th {
+  background-color: #003300; /* Darker green background for headers */
+}
+
+tr:nth-child(even) {
+  background-color: #192219; /* Slightly lighter dark background for even rows */
+}
+
+  .album-details {
+    text-align: center;
+    background-color: rgba(0, 0, 0, 0.7); /* Semi-transparent background for better readability */
+    padding: 20px;
+    border-radius: 15px;
+    margin: 20px;
+  }
+  table {
+    margin: 20px auto;
+    border-collapse: collapse;
+    width: 80%;
+  }
+  th, td {
+    text-align: left;
+    padding: 8px;
+    border-bottom: 1px solid #ddd;
+    color: #fff; /* Adjust text color for better readability */
+  }
+  th {
+    cursor: pointer;
+  }
+</style>
+</head>
+<body>
+<div id="album-container" class="album-details" data-album-id="{{ albumId }}">
+    <h1>{{ albumName }}</h1>
+    <p>Artist: {{ artistName }}</p>
+    <p>Release Year: {{ albumDate }}</p>
+    <img src="{{ albumCover }}" alt="Album cover for {{ albumName }}" style="max-width: 100%; height: auto;">
+    <!-- Track Information Table -->
+    <table id="tracksTable">
+        <thead>
+            <tr>
+                <th>Track Name</th>
+                <th onclick="sortTable()">Streams</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for track in tracks %}
+            <tr>
+                <td>{{ track.trackName }}</td>
+                <td>{{ track.trackStreams }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+<script>
+function sortTable() {
+  // Existing sortTable function here
+}
+
+// Complete the formatNumber function to format numbers with commas
+function formatNumber(num) {
+  return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
+
+// Apply the formatNumber function to each stream number after the page has loaded
+document.addEventListener('DOMContentLoaded', (event) => {
+  let streamCells = document.querySelectorAll('td:nth-child(2)');
+  streamCells.forEach(cell => {
+    let number = parseInt(cell.textContent, 10);
+    if (!isNaN(number)) {
+      cell.textContent = formatNumber(number);
+    }
+  });
+});
+</script>
+</body>
+</html>

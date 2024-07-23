@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>GemFinder</title>
+    
+    <link rel="icon" href="static/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="static/favicon-32x32.png" type="image/png">
+    <style>
+        body {
+          background-color: #0F0F0F; /* Dark background */
+          color: #0F0; /* Bright green text */
+          font-family: 'Courier New', Courier, monospace; /* Gives a more 'terminal' feel */
+        }
+        header {
+  background-image: url('static/a.png'); /* Path to your image */
+  background-size: cover; /* Cover the entire header area */
+  background-position: center; /* Center the background image */
+  color: #ffffff;
+  padding: 20px;
+  text-align: center;
+  position: relative; /* Ensure the pseudo-element positions relative to the header */
+}
+
+header::before {
+  content: ""; /* Required for pseudo-elements */
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5); /* Semi-transparent black overlay */
+  z-index: -1; /* Ensure the overlay is behind the content */
+}
+  main {
+    padding: 20px;
+  }
+  #search-form {
+      background-color: #000; /* Black background */
+      color: #0F0; /* Bright green text */
+      padding: 20px;
+      margin-bottom: 20px;
+      display: flex;
+      justify-content: center;
+      flex-direction: column;
+      align-items: center;
+    }
+    #search-form input[type="text"], #search-form input[type="submit"] {
+      padding: 10px;
+      margin: 10px 0; /* Add some space around inputs */
+      color: #0F0; /* Bright green text */
+      background-color: #000; /* Black background */
+      border: 1px solid #0F0; /* Green border */
+      text-align: center;
+    }
+    #search-form button {
+  padding: 10px 20px;
+  background-color: #000; /* Black background */
+  color: #0F0; /* Bright green text */
+  border: 1px solid #0F0; /* Green border */
+  cursor: pointer; /* Change cursor to pointer on hover */
+  transition: background-color 0.3s ease; /* Smooth transition for background color */
+}
+#search-form button:hover {
+  background-color: #0056b3; /* Change color on hover */
+}
+#album-content {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around; /* Distribute space evenly around album items */
+  padding: 20px;
+  background-color: #121212; /* Dark background for album content */
+}
+
+.album-item {
+  width: 200px; /* Fixed width for each album item */
+  margin: 10px; /* Space around each album item */
+  padding: 10px;
+  background-color: #1a1a1a; /* Slightly lighter than album-content background */
+  color: #0F0; /* Bright green text */
+  border: 1px solid #333; /* Subtle border */
+  transition: transform 0.2s ease; /* Smooth transition for scaling */
+}
+
+.album-item:hover {
+  transform: scale(1.05); /* Slightly scale up on hover */
+  border-color: #0F0; /* Change border color on hover */
+}
+    </style>
+  </head>
+  <body>
+    <header>
+        <h1>GemFinder</h1>
+        <p>Use GemFinder to discover music gems inside known albums.</p>
+    </header>
+    <main>
+      <!-- Search form -->
+      <form id="search-form">
+        <input
+          type="text"
+          id="album_name"
+          name="album_name"
+          placeholder="Enter album name"
+        />
+        <button type="submit">Search</button>
+      </form>
+
+      <!-- Container for displaying the album content -->
+      <div id="album-content"></div>
+    </main>
+    <footer>
+      <!-- Footer content here -->
+    </footer>
+
+    <!-- jQuery for AJAX call -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(function () {
+          $("#search-form").submit(function (e) {
+            e.preventDefault(); // Prevent the default form submission
+            var albumName = $('#album_name').val();
+            $.ajax({
+                type: 'POST',
+                url: '/search_album', // Adjust to your actual endpoint
+                data: { album_name: albumName }, // Include album_name in the data sent to the server
+                success: function(response) {
+                    // Handle the response from the server, e.g., display the album details
+                    $('#album-content').html(response);
+                },
+                error: function(xhr, status, error) {
+                    // Handle errors here, such as displaying a message to the user
+                }
+            });
+          });
+        });
+      </script>
+  </body>
+</html>
