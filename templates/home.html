@@ -9,7 +9,7 @@
     <link rel="shortcut icon" href="static/favicon-32x32.png" type="image/png">
     <style>
         body {
-          background-color: #0F0F0F; /* Dark background */
+          background-color: #0A0A0A; /* Dark background */
           color: #0F0; /* Bright green text */
           font-family: 'Courier New', Courier, monospace; /* Gives a more 'terminal' feel */
         }
@@ -91,8 +91,10 @@ header::before {
   </head>
   <body>
     <header>
+      <div style="background-color: rgba(0, 0, 0, 0.5); padding: 20px;">
         <h1>GemFinder</h1>
         <p>Use GemFinder to discover music gems inside known albums.</p>
+        </div>
     </header>
     <main>
       <!-- Search form -->
@@ -107,7 +109,7 @@ header::before {
       </form>
 
       <!-- Container for displaying the album content -->
-      <div id="album-content"></div>
+      <div id="album-content" style="width: 80%; padding: 20px; margin: auto; background-color: rgba(0, 0, 0, 0.5);"></div>
     </main>
     <footer>
       <!-- Footer content here -->
@@ -136,4 +138,7 @@ header::before {
         });
       </script>
   </body>
+  <footer style="text-align: center; padding: 20px; margin-top: 20px; background-color: #111; color: #0F0;">
+    || casually coded by <a href="https://x.com/mai0li">@mai0li</a> | Vai Brasil 🇧🇷 ||
+</footer>
 </html>
